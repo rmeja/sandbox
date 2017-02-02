@@ -1,3 +1,1 @@
-## Sandbox
-
-![sandbox](https://github.com/rmeja/sandbox/sandbox.png)
+![sandbox](https://raw.githubusercontent.com/rmeja/sandbox/master/sandbox.png)
