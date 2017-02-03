@@ -1,4 +1,3 @@
-// hello.cc
 #include <nan.h>
 #include <chrono>
 #include <thread>
@@ -35,7 +34,7 @@ NAN_MODULE_INIT(Init) {
   Nan::Set(target, New<String>("hello").ToLocalChecked(),
       GetFunction(New<FunctionTemplate>(hello)).ToLocalChecked());
   Nan::Set(target, New<String>("helloAsync").ToLocalChecked(),
-          GetFunction(New<FunctionTemplate>(helloAsync)).ToLocalChecked());
+      GetFunction(New<FunctionTemplate>(helloAsync)).ToLocalChecked());
 }
 
 NODE_MODULE(addon, Init)

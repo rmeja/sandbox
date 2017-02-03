@@ -1,7 +1,9 @@
-// hello.js
 const addon = require('./build/Release/addon');
 
-console.log(addon.hello()); // 'world'
+// Hello World synchronous
+console.log(addon.hello());
+
+// Hello World asynchronous
 addon.helloAsync((result) => {
   console.log(result)
-})
+});
