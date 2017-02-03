@@ -12,7 +12,7 @@ class HelloAsync : public AsyncWorker {
 
     // Executes in worker thread
     void Execute() {
-        std::this_thread::sleep_for(chrono::milliseconds(100));
+        std::this_thread::sleep_for(chrono::milliseconds(1000));
     }
     // Executes in event loop
     void HandleOKCallback () {
