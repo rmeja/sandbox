@@ -1,0 +1,16 @@
+{
+  "name": "node-addon",
+  "version": "0.0.1",
+  "description": "",
+  "main": "hello.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "node-gyp rebuild"
+  },
+  "author": "",
+  "license": "ISC",
+  "gypfile": true,
+  "dependencies": {
+    "nan": "^2.3.3"
+  }
+}

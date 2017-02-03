@@ -1,15 +1,41 @@
 // hello.cc
-#include <node.h>
+#include <nan.h>
+#include <chrono>
+#include <thread>
 
+using namespace std;
+using namespace Nan;
 using namespace v8;
 
-void Method(const FunctionCallbackInfo<Value>& args) {
-  Isolate* isolate = args.GetIsolate();
-  args.GetReturnValue().Set(String::NewFromUtf8(isolate, "world"));
+class HelloAsync : public AsyncWorker {
+    public: HelloAsync(Callback * callback) : AsyncWorker(callback) {}
+
+    // Executes in worker thread
+    void Execute() {
+        std::this_thread::sleep_for(chrono::milliseconds(100));
+    }
+    // Executes in event loop
+    void HandleOKCallback () {
+        Local<String> world = Nan::New<String>("... world").ToLocalChecked();
+        Local<Value> argv[] = { world };
+        callback->Call(1, argv);
+    }
+};
+
+NAN_METHOD(helloAsync) {
+    Callback *callback = new Callback(info[0].As<Function>());
+    AsyncQueueWorker(new HelloAsync(callback));
 }
 
-void init(Local<Object> exports) {
-  NODE_SET_METHOD(exports, "hello", Method);
+NAN_METHOD(hello) {
+    info.GetReturnValue().Set(Nan::New<String>("world").ToLocalChecked());
 }
 
-NODE_MODULE(addon, init)
+NAN_MODULE_INIT(Init) {
+  Nan::Set(target, New<String>("hello").ToLocalChecked(),
+      GetFunction(New<FunctionTemplate>(hello)).ToLocalChecked());
+  Nan::Set(target, New<String>("helloAsync").ToLocalChecked(),
+          GetFunction(New<FunctionTemplate>(helloAsync)).ToLocalChecked());
+}
+
+NODE_MODULE(addon, Init)
