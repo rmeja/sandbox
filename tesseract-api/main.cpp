@@ -4,7 +4,10 @@
 
 int main(int argc, char *argv[]) {
     auto input = argv[1];
-    std::cout << input << std::endl;
+    if (argc < 2) {
+        std::cout << "argument missing" << std::endl;
+        exit(1);
+    }
     Pix *image = pixRead(input);
     tesseract::TessBaseAPI *api = new tesseract::TessBaseAPI();
     api->Init(NULL, "eng");
