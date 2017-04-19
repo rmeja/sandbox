@@ -2,9 +2,10 @@
 #include <tesseract/baseapi.h>
 #include <leptonica/allheaders.h>
 
-int main() {
-
-    Pix *image = pixRead("/home/meja/Dev/envrac/tiff/test.tif");
+int main(int argc, char *argv[]) {
+    auto input = argv[1];
+    std::cout << input << std::endl;
+    Pix *image = pixRead(input);
     tesseract::TessBaseAPI *api = new tesseract::TessBaseAPI();
     api->Init(NULL, "eng");
     api->SetImage(image);
