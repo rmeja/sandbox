@@ -1,0 +1,5 @@
+# WebStorm files
+.idea
+
+# CMake build
+cmake-build-debug
