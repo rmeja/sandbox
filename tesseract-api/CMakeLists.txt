@@ -6,6 +6,9 @@ set(CMAKE_CXX_STANDARD 14)
 set(SOURCE_FILES main.cpp)
 add_executable(tesseract_api ${SOURCE_FILES})
 
+set(SOURCE_TEST_FILES test/main-test.cpp)
+add_executable(main-test ${SOURCE_TEST_FILES})
+
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
 find_package(Tesseract REQUIRED)
 find_package(Leptonica REQUIRED)
