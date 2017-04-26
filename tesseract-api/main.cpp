@@ -1,5 +1,5 @@
 #include <iostream>
-#include <array>
+#include <vector>
 #include <tesseract/baseapi.h>
 #include <leptonica/allheaders.h>
 
@@ -15,15 +15,13 @@ int main(int argc, char *argv[]) {
     tesseract::TessBaseAPI *api = new tesseract::TessBaseAPI();
     api->Init(NULL, "eng");
     api->SetImage(image);
+
     struct boxComponentImage { string name; Boxa* box; };
     boxComponentImage blockBoxes = { "blockBoxes", api->GetComponentImages(tesseract::RIL_BLOCK, true, NULL, NULL)};
     boxComponentImage paragraphBoxes = {"paragraphBoxes", api->GetComponentImages(tesseract::RIL_PARA, true, NULL, NULL)};
     boxComponentImage textLineBoxes = {"textLineBoxes", api->GetComponentImages(tesseract::RIL_TEXTLINE, true, NULL, NULL)};
-    // boxComponentImage wordBoxes = {"wordBoxes", api->GetComponentImages(tesseract::RIL_WORD, true, NULL, NULL)};
-    // boxComponentImage symbolBoxes = {"symbolBoxes", api->GetComponentImages(tesseract::RIL_SYMBOL, true, NULL, NULL)};
 
-    array<boxComponentImage, 3> boxesComponentImage = { blockBoxes, paragraphBoxes, textLineBoxes };
-    
+    vector<boxComponentImage> boxesComponentImage{ blockBoxes, paragraphBoxes, textLineBoxes };
     for (const boxComponentImage boxComponentImage : boxesComponentImage) {
         cout << "Found " << boxComponentImage.box->n << " " << boxComponentImage.name << " image components.\n" << endl;
         for (int i = 0; i < boxComponentImage.box->n; i++) {
@@ -32,9 +30,7 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    // Destroy used object and release memory
     api->End();
     pixDestroy(&image);
-
     return 0;
 }
