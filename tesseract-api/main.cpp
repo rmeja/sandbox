@@ -14,6 +14,7 @@ int main(int argc, char *argv[]) {
     Pix *image = pixRead(input);
     tesseract::TessBaseAPI *api = new tesseract::TessBaseAPI();
     api->Init(NULL, "eng");
+    api->SetPageSegMode(tesseract::PSM_AUTO);
     api->SetImage(image);
 
     struct boxComponentImage { string name; Boxa* box; };
@@ -22,14 +23,17 @@ int main(int argc, char *argv[]) {
     boxComponentImage textLineBoxes = {"textLineBoxes", api->GetComponentImages(tesseract::RIL_TEXTLINE, true, NULL, NULL)};
 
     vector<boxComponentImage> boxesComponentImage{ blockBoxes, paragraphBoxes, textLineBoxes };
-    for (const boxComponentImage boxComponentImage : boxesComponentImage) {
-        cout << "Found " << boxComponentImage.box->n << " " << boxComponentImage.name << " image components.\n" << endl;
-        for (int i = 0; i < boxComponentImage.box->n; i++) {
-            BOX *box = boxaGetBox(boxComponentImage.box, i, L_CLONE);
-            std::cout << "Box[" << i <<"]: x="<< box->x <<", y="<< box->y <<", w="<< box->w <<", h="<< box->h << std::endl;
-        }
-    }
+     for (const boxComponentImage boxComponentImage : boxesComponentImage) {
+         cout << "Found " << boxComponentImage.box->n << " " << boxComponentImage.name << " image components.\n" << endl;
+         for (int i = 0; i < boxComponentImage.box->n; i++) {
+             BOX *box = boxaGetBox(boxComponentImage.box, i, L_CLONE);
+             std::cout << "Box[" << i <<"]: x="<< box->x <<", y="<< box->y <<", w="<< box->w <<", h="<< box->h << std::endl;
+         }
+     }
 
+    api->Recognize(0);
+    char* outText = api->GetUTF8Text();
+    cout << outText << endl;
     api->End();
     pixDestroy(&image);
     return 0;
