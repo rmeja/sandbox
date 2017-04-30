@@ -23,13 +23,14 @@ int main(int argc, char *argv[]) {
     boxComponentImage textLineBoxes = {"textLineBoxes", api->GetComponentImages(tesseract::RIL_TEXTLINE, true, NULL, NULL)};
 
     vector<boxComponentImage> boxesComponentImage{ blockBoxes, paragraphBoxes, textLineBoxes };
-     for (const boxComponentImage boxComponentImage : boxesComponentImage) {
-         cout << "Found " << boxComponentImage.box->n << " " << boxComponentImage.name << " image components.\n" << endl;
-         for (int i = 0; i < boxComponentImage.box->n; i++) {
-             BOX *box = boxaGetBox(boxComponentImage.box, i, L_CLONE);
-             std::cout << "Box[" << i <<"]: x="<< box->x <<", y="<< box->y <<", w="<< box->w <<", h="<< box->h << std::endl;
-         }
-     }
+    for (const boxComponentImage boxComponentImage : boxesComponentImage) {
+        cout << "Found " << boxComponentImage.box->n << " " << boxComponentImage.name << " image components.\n" << endl;
+        for (int i = 0; i < boxComponentImage.box->n; i++) {
+            BOX *box = boxaGetBox(boxComponentImage.box, i, L_CLONE);
+            std::cout << "Box[" << i << "]: x=" << box->x << ", y=" << box->y << ", w=" << box->w << ", h=" << box->h
+                      << std::endl;
+        }
+    }
 
     api->Recognize(0);
     char* outText = api->GetUTF8Text();
