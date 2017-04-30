@@ -1,10 +1,8 @@
 #include "octachore.hpp"
-#include <tesseract/baseapi.h>
-#include <leptonica/allheaders.h>
+#include <vector>
 
 std::string Octachore::getAllText(std::string imagePath) {
-    const char *cstrImagePath = imagePath.c_str();
-    Pix *image = pixRead(cstrImagePath);
+    Pix *image = pixRead(imagePath.c_str());
     tesseract::TessBaseAPI *api = new tesseract::TessBaseAPI();
     api->Init(NULL, "eng");
     api->SetPageSegMode(tesseract::PSM_AUTO);
@@ -15,4 +13,13 @@ std::string Octachore::getAllText(std::string imagePath) {
     api->End();
     pixDestroy(&image);
     return outputText;
+}
+
+Boxa* Octachore::getAllComponentImage(std::string imagePath, tesseract::PageIteratorLevel blockType) {
+    Pix *image = pixRead(imagePath.c_str());
+    tesseract::TessBaseAPI *api = new tesseract::TessBaseAPI();
+    api->Init(NULL, "eng");
+    api->SetPageSegMode(tesseract::PSM_AUTO);
+    api->SetImage(image);
+    return api->GetComponentImages(blockType, true, NULL, NULL);
 }
