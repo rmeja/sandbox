@@ -6,7 +6,9 @@
 #include <tesseract/baseapi.h>
 
 namespace Octachore {
-std::string getAllText(std::string imagePath);
+std::string getAllText(std::string imagePath, 
+                                  std::string lang,
+                                  tesseract::PageSegMode psm);
 struct boxComponentImage {
   std::string name;
   Boxa *box;
