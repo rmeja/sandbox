@@ -6,14 +6,12 @@
 #include <tesseract/baseapi.h>
 
 namespace Octachore {
-std::string getAllText(std::string imagePath, 
-                                  std::string lang,
-                                  tesseract::PageSegMode psm);
+std::string getAllText(std::string imagePath, std::string lang, tesseract::PageSegMode psm);
 struct boxComponentImage {
   std::string name;
-  Boxa *box;
+  Boxa* box;
 };
-Boxa *getAllComponentImage(std::string imagePath, tesseract::PageIteratorLevel blockType);
+Boxa* getAllComponentImage(std::string imagePath, tesseract::PageIteratorLevel blockType);
 }
 
 #endif // !OCTACHORE_H

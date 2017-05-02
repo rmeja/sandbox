@@ -6,7 +6,7 @@
 std::string currentPath = boost::filesystem::current_path().string();
 std::string imagePath{currentPath + "/test/lorem-ipsum-mini.tif"};
 std::string text = Octachore::getAllText(imagePath, "eng", tesseract::PSM_AUTO);
-Boxa *blockBoxes = Octachore::getAllComponentImage(imagePath, tesseract::RIL_BLOCK);
+Boxa* blockBoxes = Octachore::getAllComponentImage(imagePath, tesseract::RIL_BLOCK);
 
 TEST_CASE("getAllText have to return some good text") {
   REQUIRE(text.find("Lorem ipsum dolor sit amet") != std::string::npos);
