@@ -35,6 +35,7 @@ int main(int argc, char *argv[]) {
     api->Recognize(0);
     char* outText = api->GetUTF8Text();
     cout << outText << endl;
+    delete [] outText;
     api->End();
     pixDestroy(&image);
     return 0;
