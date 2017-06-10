@@ -33,9 +33,24 @@ int main(int argc, char *argv[]) {
     }
 
     api->Recognize(0);
-    char* outText = api->GetUTF8Text();
-    cout << outText << endl;
-    delete [] outText;
+    // char* outText = api->GetUTF8Text();
+    // cout << outText << endl;
+    // delete [] outText;
+    tesseract::ResultIterator* ri = api->GetIterator();
+    tesseract::PageIteratorLevel level = tesseract::RIL_BLOCK;
+    if (ri != 0) {
+        do {
+        const char* word = ri->GetUTF8Text(level);
+        float conf = ri->Confidence(level);
+        int x1, y1, x2, y2;
+        ri->BoundingBox(level, &x1, &y1, &x2, &y2);
+        printf("word: '%s';  \tconf: %.2f; BoundingBox: %d,%d,%d,%d;\n",
+                word, conf, x1, y1, x2, y2);
+        int blocktype = static_cast<int>(ri->BlockType());
+        printf("blocktype: %d\n", blocktype);
+        delete[] word;
+        } while (ri->Next(level));
+    }
     api->End();
     pixDestroy(&image);
     return 0;
