@@ -3,6 +3,7 @@ project(tesseract_api)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
+include(CMakeToolsHelpers OPTIONAL)
 find_package(Boost 1.58 REQUIRED COMPONENTS filesystem REQUIRED)
 find_package(Tesseract REQUIRED)
 find_package(Leptonica REQUIRED)
