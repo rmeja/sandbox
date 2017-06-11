@@ -1,0 +1,9 @@
+# Visual Studio Code files
+.vscode
+
+# WebStorm files
+.idea
+
+# CMake build
+cmake-build-*
+build/*
