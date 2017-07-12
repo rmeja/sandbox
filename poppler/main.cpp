@@ -1,12 +1,11 @@
 #include <iostream>
 #include <memory>
-
 #include <poppler-document.h>
 #include <poppler-page.h>
 using namespace std;
 
 int main(int argc, char *argv[]) {
-    auto input = "test2.pdf";
+    auto input = argv[1];
     shared_ptr<poppler::document> doc{ poppler::document::load_from_file(input) };
     if (doc == NULL) {    
         return 1;
