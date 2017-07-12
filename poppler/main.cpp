@@ -6,8 +6,11 @@
 using namespace std;
 
 int main(int argc, char *argv[]) {
-    auto input = argv[1];
+    auto input = "test2.pdf";
     shared_ptr<poppler::document> doc{ poppler::document::load_from_file(input) };
+    if (doc == NULL) {    
+        return 1;
+    }
     const int pagesNbr = doc->pages();
     cout << "page count: " << pagesNbr << endl;
 
